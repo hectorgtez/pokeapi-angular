@@ -1,1 +1,1 @@
-# pokeapi-angular
+# pokedex-angular
