@@ -1,5 +1,14 @@
 <main id="container">
-  <app-pokemon-sprite/>
+  <app-pokemon-info
+    [pokemon]="selectedPokemon"
+    [opened]="info"
+    (clicked)="changeInfoStatus()"
+    [ngClass]="{ opened: info }"
+  />
+  <app-pokemon-sprite
+    [pokemon]="selectedPokemon"
+    [ngClass]="{ opened: info }"
+  />
   <div
     id="cardsContainer"
     #cards
@@ -8,6 +17,8 @@
     <app-pokemon-card
       *ngFor="let pokemon of pokemonList"
       [data]="pokemon"
+      [selected]="pokemon.name === selectedPokemon?.name"
+      (clicked)="cardClicked($event)"
     />
     <img
       *ngIf="loading"

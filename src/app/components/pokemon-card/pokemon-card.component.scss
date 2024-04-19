@@ -4,7 +4,7 @@
   isolation: isolate;
   position: relative;
 
-  &.seleccionado::before {
+  &.selected::before {
     background-color: #da4443;
     border-radius: 5px;
     content: '';
@@ -19,6 +19,7 @@
 #arrow {
   height: 20px;
   padding: 0 10px;
+  position: absolute;
 }
 
 #card {
@@ -28,8 +29,16 @@
   display: flex;
   font-size: larger;
   gap: 1rem;
+  margin-left: 30px;
   padding-left: 5px;
-  width: 100%;
+  width: 90%;
+
+  &.selected {
+    background-color: #f49545;
+    box-shadow: inset 0px 0px 7px 4px #fceab8;
+    -webkit-box-shadow: inset 0px 0px 7px 4px #fceab8;
+    -moz-box-shadow: inset 0px 0px 7px 4px #fceab8;
+  }
 }
 
 #circle {

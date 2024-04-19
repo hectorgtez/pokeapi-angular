@@ -3,6 +3,7 @@ import { Injectable, inject } from '@angular/core';
 import { Observable, map, of } from 'rxjs';
 
 import { Data, Result } from '../interfaces/pokeapi.interface';
+import { Pokemon } from '../interfaces/pokemon.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -21,11 +22,16 @@ export class PokemonService {
       );
   }
 
-  getById(id: string) {
-    return this._http.get<Data>(`${ this._api_url }/pokemon/${ id }`);
+  getById(id: string): Observable<Pokemon> {
+    return this._http.get<Pokemon>(`${ this._api_url }/pokemon/${ id }`);
   }
 
-  getDescription() {
-
+  getDescription(id: number) {
+    return this._http.get(`${ this._api_url }/pokemon-species/${ id }`)
+      .pipe(
+        map( (resp: any) =>
+          resp.flavor_text_entries.find( (text: any) => text.language.name === 'es')),
+        map( resp => resp.flavor_text ),
+      );
   }
 }

@@ -11,4 +11,9 @@
   border-radius: 25px;
   outline: 12px solid #f8e55c;
   max-width: 500px;
+
+  img {
+    image-rendering: pixelated;
+    width: 100%;
+  }
 }
