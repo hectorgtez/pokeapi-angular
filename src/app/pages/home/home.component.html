@@ -1,0 +1,19 @@
+<main id="container">
+  <app-pokemon-sprite/>
+  <div
+    id="cardsContainer"
+    #cards
+    (scroll)="onScroll($event)"
+  >
+    <app-pokemon-card
+      *ngFor="let pokemon of pokemonList"
+      [data]="pokemon"
+    />
+    <img
+      *ngIf="loading"
+      id="spinner"
+      src="./../../../assets/img/spinner.svg"
+      alt="Loading..."
+    >
+  </div>
+</main>
