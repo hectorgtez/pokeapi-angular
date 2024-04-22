@@ -1,11 +1,14 @@
 import { Component, EventEmitter, Input, OnChanges, Output, inject } from '@angular/core';
+import { CommonModule } from '@angular/common';
 
 import { Result } from '../../interfaces/pokeapi.interface';
-import { PokemonService } from '../../services/pokemon.service';
 import { Pokemon } from '../../interfaces/pokemon.interface';
+import { PokemonService } from '../../services/pokemon.service';
 
 @Component({
   selector: 'app-pokemon-card',
+  standalone: true,
+  imports: [CommonModule],
   templateUrl: './pokemon-card.component.html',
   styleUrl: './pokemon-card.component.scss'
 })

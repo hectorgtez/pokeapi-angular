@@ -8,7 +8,7 @@ describe('PokemonSpriteComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [PokemonSpriteComponent]
+      imports: [PokemonSpriteComponent]
     })
     .compileComponents();
     

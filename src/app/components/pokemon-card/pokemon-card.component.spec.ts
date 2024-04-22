@@ -8,7 +8,7 @@ describe('PokemonCardComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [PokemonCardComponent]
+      imports: [PokemonCardComponent]
     })
     .compileComponents();
     

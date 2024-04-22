@@ -1,11 +1,22 @@
 import { Component, ElementRef, OnInit, ViewChild, inject } from '@angular/core';
-import { PokemonService } from '../../services/pokemon.service';
+import { CommonModule } from '@angular/common';
 
 import { Result } from '../../interfaces/pokeapi.interface';
 import { Pokemon } from '../../interfaces/pokemon.interface';
+import { PokemonService } from '../../services/pokemon.service';
+import { PokemonCardComponent } from '../../components/pokemon-card/pokemon-card.component';
+import { PokemonSpriteComponent } from '../../components/pokemon-sprite/pokemon-sprite.component';
+import { PokemonInfoComponent } from '../../components/pokemon-info/pokemon-info.component';
 
 @Component({
   selector: 'app-home',
+  standalone: true,
+  imports: [
+    CommonModule,
+    PokemonCardComponent,
+    PokemonSpriteComponent,
+    PokemonInfoComponent,
+  ],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss'
 })
@@ -27,7 +38,7 @@ export class HomeComponent implements OnInit {
   loadList() {
     this.loading = true;
     this._pokemonService.getByPage(this.page)
-    .subscribe( resp => {
+    .subscribe( (resp: any) => {
       this.pokemonList = [...this.pokemonList, ...resp];
       this.page++;
       this.loading = false;
@@ -50,7 +61,7 @@ export class HomeComponent implements OnInit {
     }
 
     this._pokemonService.getById(id)
-      .subscribe( resp => {
+      .subscribe( (resp: any) => {
         this.selectedPokemon = resp;
       });
   }
