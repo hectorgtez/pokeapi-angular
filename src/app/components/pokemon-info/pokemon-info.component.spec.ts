@@ -8,7 +8,7 @@ describe('PokemonInfoComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [PokemonInfoComponent]
+      imports: [PokemonInfoComponent]
     })
     .compileComponents();
     

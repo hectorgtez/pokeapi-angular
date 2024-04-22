@@ -1,28 +1,12 @@
-import { Component, EventEmitter, Input, OnChanges, Output, inject } from '@angular/core';
-
-import { Pokemon } from '../../interfaces/pokemon.interface';
-import { PokemonService } from '../../services/pokemon.service';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-pokemon-info',
+  standalone: true,
+  imports: [],
   templateUrl: './pokemon-info.component.html',
   styleUrl: './pokemon-info.component.scss'
 })
-export class PokemonInfoComponent implements OnChanges {
-  @Input() pokemon?: Pokemon;
-  @Input() opened: boolean = false;
-  @Output() clicked = new EventEmitter();
+export class PokemonInfoComponent {
 
-  private _pokemonService = inject(PokemonService);
-
-  public description: string = '';
-
-  ngOnChanges(): void {
-    if (this.pokemon)  {
-      this._pokemonService.getDescription(this.pokemon?.id)
-      .subscribe( resp => {
-        this.description = resp;
-      });
-    }
-  }
 }
