@@ -1,1 +1,7 @@
-<p>pokemon-sprite works!</p>
+<div id="container">
+  <img
+    *ngIf="pokemon"
+    [src]="pokemon.sprites.front_default"
+    alt=""
+  >
+</div>
