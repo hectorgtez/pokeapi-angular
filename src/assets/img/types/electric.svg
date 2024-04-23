@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Creator: CorelDRAW -->
+<svg xmlns="http://www.w3.org/2000/svg" xml:space="preserve" width="1080px" height="1080px" version="1.1" style="shape-rendering:geometricPrecision; text-rendering:geometricPrecision; image-rendering:optimizeQuality; fill-rule:evenodd; clip-rule:evenodd"
+viewBox="0 0 1080 1080"
+ xmlns:xlink="http://www.w3.org/1999/xlink"
+ xmlns:xodm="http://www.corel.com/coreldraw/odm/2003">
+ <defs>
+  <style type="text/css">
+   <![CDATA[
+    .fil0 {fill:#F3D23B}
+    .fil1 {fill:#FDFDFE}
+   ]]>
+  </style>
+ </defs>
+ <g id="Capa_x0020_1">
+  <metadata id="CorelCorpID_0Corel-Layer"/>
+  <g id="Eléctrico">
+   <path class="fil0" d="M451.99 450.61l-89.46 -204.61 262.21 0.25 107.85 345.03 -164.85 -5.89 93.86 278.76 -200.68 -204.27c-43.39,-49.21 -188.16,-186.14 -195.68,-208.11l186.75 -1.16zm-451.99 47.43c0,182.31 23.45,290.7 156.57,423.53 211.7,211.24 552.97,211.24 764.66,0 211.69,-211.24 211.69,-551.79 0,-763.03 -162.79,-162.44 -418.38,-204.19 -618.3,-106.02 -157.37,77.28 -302.93,256.18 -302.93,445.52z"/>
+   <path class="fil1" d="M451.99 450.61l-186.75 1.16c7.52,21.97 152.29,158.9 195.68,208.11l200.68 204.27 -93.86 -278.76 164.85 5.89 -107.85 -345.03 -262.21 -0.25 89.46 204.61z"/>
+  </g>
+ </g>
+</svg>

@@ -1,0 +1,95 @@
+@use './../../../assets/styles/var.scss';
+
+img {
+  filter: drop-shadow(1px 1px 2px rgba(0, 0, 0, 0.4));
+  width: 20px;
+}
+
+.container {
+  align-items: center;
+  background-color: rgb(90, 90, 90);
+  border-radius: 5px;
+  color: var.$white-text;
+  display: flex;
+  justify-content: space-around;
+  margin-left: 5px;
+  padding: 5px 15px;
+  width: 100px;
+
+  span {
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
+  }
+}
+
+// Type colors
+.bug {
+  background-color: var.$type-bug;
+}
+
+.dark {
+  background-color: var.$type-dark;
+}
+
+.dragon {
+  background-color: var.$type-dragon;
+}
+
+.electric {
+  background-color: var.$type-electic;
+}
+
+.fairy {
+  background-color: var.$type-fairy;
+}
+
+.fighting {
+  background-color: var.$type-fighting;
+}
+
+.fire {
+  background-color: var.$type-fire;
+}
+
+.flying {
+  background-color: var.$type-flying;
+}
+
+.ghost {
+  background-color: var.$type-ghost;
+}
+
+.grass {
+  background-color: var.$type-grass;
+}
+
+.ground {
+  background-color: var.$type-ground;
+}
+
+.ice {
+  background-color: var.$type-ice;
+}
+
+.normal {
+  background-color: var.$type-normal;
+}
+
+.poison {
+  background-color: var.$type-poison;
+}
+
+.psychic {
+  background-color: var.$type-psychic;
+}
+
+.rock {
+  background-color: var.$type-rock;
+}
+
+.steel {
+  background-color: var.$type-steel;
+}
+
+.water {
+  background-color: var.$type-water;
+}

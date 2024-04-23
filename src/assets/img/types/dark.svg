@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<!-- Creator: CorelDRAW -->
+<svg xmlns="http://www.w3.org/2000/svg" xml:space="preserve" width="1080px" height="1080px" version="1.1" style="shape-rendering:geometricPrecision; text-rendering:geometricPrecision; image-rendering:optimizeQuality; fill-rule:evenodd; clip-rule:evenodd"
+viewBox="0 0 1080 1080"
+ xmlns:xlink="http://www.w3.org/1999/xlink"
+ xmlns:xodm="http://www.corel.com/coreldraw/odm/2003">
+ <defs>
+  <style type="text/css">
+   <![CDATA[
+    .fil0 {fill:#595366}
+    .fil1 {fill:#FDFDFE}
+   ]]>
+  </style>
+ </defs>
+ <g id="Capa_x0020_1">
+  <metadata id="CorelCorpID_0Corel-Layer"/>
+  <g id="Siniestro">
+   <path class="fil0" d="M473.53 210.16c203.64,-42.73 364.01,99.11 396.37,260.1 41.21,205.04 -98.49,367.56 -261.06,400.09 -437.96,87.65 -581.07,-566.64 -135.31,-660.19zm-473.53 287.88c0,182.31 23.45,290.7 156.56,423.53 211.7,211.24 552.97,211.24 764.67,0 211.69,-211.25 211.69,-551.79 0,-763.03 -162.79,-162.44 -418.39,-204.19 -618.3,-106.02 -157.38,77.28 -302.93,256.18 -302.93,445.52z"/>
+   <path class="fil1" d="M469.57 287.08l77.75 -9.47c392.38,37.82 300.64,543.05 -8.42,524.89l-69.51 -8.19c41.5,-37.17 168.57,-85.2 168.57,-254.25 0,-169.65 -127.26,-217.04 -168.39,-252.98zm3.96 -76.92c-445.76,93.55 -302.65,747.84 135.31,660.19 162.57,-32.53 302.27,-195.05 261.06,-400.09 -32.36,-160.99 -192.73,-302.83 -396.37,-260.1z"/>
+   <path class="fil0" d="M538.9 802.5c309.06,18.16 400.8,-487.07 8.42,-524.89l-77.75 9.47c41.13,35.94 168.39,83.33 168.39,252.98 0,169.05 -127.07,217.08 -168.57,254.25l69.51 8.19z"/>
+  </g>
+ </g>
+</svg>
