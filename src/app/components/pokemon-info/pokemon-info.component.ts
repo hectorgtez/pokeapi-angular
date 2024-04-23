@@ -4,6 +4,9 @@ import { Component, EventEmitter, Input, Output, inject } from '@angular/core';
 import { Pokemon } from '../../interfaces/pokemon.interface';
 import { PokemonService } from '../../services/pokemon.service';
 
+import { KilosPipe } from '../../pipes/kilos.pipe';
+import { MetrosPipe } from '../../pipes/metros.pipe';
+
 import { PokemonCardComponent } from '../pokemon-card/pokemon-card.component';
 import { TypeComponent } from '../type/type.component';
 
@@ -14,6 +17,8 @@ import { TypeComponent } from '../type/type.component';
     CommonModule,
     PokemonCardComponent,
     TypeComponent,
+    KilosPipe,
+    MetrosPipe,
   ],
   templateUrl: './pokemon-info.component.html',
   styleUrl: './pokemon-info.component.scss'
