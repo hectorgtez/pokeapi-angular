@@ -22,8 +22,15 @@
           [type]="type.type.name"
         />
       </div>
-      <p><span class="label">Altura</span>{{ pokemon?.height }}'</p>
-      <p><span class="label">Peso</span>{{ pokemon?.weight | kilos | number:'1.1-2' }} Kg.</p>
+      <p>
+        <span class="label">Altura</span>
+        {{ pokemon?.height | metros | number:'1.1-2' }} m
+      </p>
+
+      <p>
+        <span class="label">Peso</span>
+        {{ pokemon?.weight | kilos | number:'1.1-2' }} Kg
+      </p>
     </div>
 
     <div class="area">
