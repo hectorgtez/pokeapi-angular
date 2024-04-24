@@ -1,5 +1,5 @@
-
 @use './../assets/styles/var.scss';
+@import url('https://fonts.googleapis.com/css2?family=M+PLUS+Rounded+1c:wght@800&display=swap');
 
 header {
   align-items: center;
@@ -39,15 +39,17 @@ header {
   height: 50px;
   justify-content: space-between;
   padding: 0 5px;
-  width: 300px;
+  width: 450px;
 
   img {
     height: 40px;
   }
 
   h1 {
-    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-family: 'M PLUS Rounded 1c', 'Gill Sans';
     font-size: 2.5rem;
+    font-weight: 800;
+    letter-spacing: -2px;
     -webkit-text-stroke: 2px #30607a;
   }
 }
@@ -82,8 +84,24 @@ footer{
   }
 }
 
+#searchBar {
+  border: solid 3px #30408d;
+  border-radius: 50px;
+  font-size: medium;
+  height: 40px;
+  padding: 0 20px;
+  transition: 0.05s ease-in-out;
+  width: 30%;
+
+  &:hover {
+    outline: 3px solid #4379cf;
+  }
+}
+
 #sortButton {
-  transition: 0.1s ease-in-out;
+  text-align: center;
+  transition: 0.05s ease-in-out;
+  width: 130px;
 
   &:hover {
     scale: 1.05;

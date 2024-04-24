@@ -1,15 +1,22 @@
 <header>
   <div id="titleContainer">
     <img src="./../assets/img/blue-pokeball.svg">
-    <h1>Pokédex</h1>
+    <h1>National Pokédex</h1>
     <img src="./../assets/img/blue-pokeball.svg">
   </div>
+
+  <input
+    id="searchBar"
+    type="text"
+    placeholder="Search..."
+  />
+
   <a
     href="#"
     id="sortButton"
     (click)="changeOrder()"
   >
-    By {{ pokemonService.orderBy }}
+    By {{ pokemonService.orderBy | titlecase }}
   </a>
 </header>
 
