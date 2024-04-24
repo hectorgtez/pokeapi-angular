@@ -66,8 +66,6 @@ app-pokemon-info {
   }
 
   ::-webkit-scrollbar-track {
-    border: solid #90ace7 2px;
-    cursor: pointer;
     background: repeating-linear-gradient(
       0deg,
       #276d83,
@@ -75,6 +73,8 @@ app-pokemon-info {
       #1c4760 7px,
       #1c4760 9px
     );
+    border: solid #90ace7 2px;
+    cursor: pointer;
   }
 }
 

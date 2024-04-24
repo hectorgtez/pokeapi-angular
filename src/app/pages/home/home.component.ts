@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { Pokemon } from '../../interfaces/pokemon.interface';
 
 import { PokemonService } from '../../services/pokemon.service';
+import { OrderByPipe } from '../../pipes/order-by.pipe';
 
 import { PokemonCardComponent } from '../../components/pokemon-card/pokemon-card.component';
 import { PokemonSpriteComponent } from '../../components/pokemon-sprite/pokemon-sprite.component';
@@ -17,6 +18,7 @@ import { PokemonInfoComponent } from '../../components/pokemon-info/pokemon-info
     PokemonCardComponent,
     PokemonSpriteComponent,
     PokemonInfoComponent,
+    OrderByPipe,
   ],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss'
@@ -41,7 +43,6 @@ export class HomeComponent implements OnInit {
     .subscribe( (resp: any) => {
       this.pokemonService.pokemonList =
         [...this.pokemonService.pokemonList, ...resp];
-      this.pokemonService.orderBy(this.pokemonService.order);
       this.page++;
       this.loading = false;
     });

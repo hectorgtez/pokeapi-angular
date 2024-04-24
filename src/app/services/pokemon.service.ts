@@ -14,7 +14,7 @@ export class PokemonService {
   private _apiUrl = environment.apiUrl;
 
   public pokemonList: Result[] = [];
-  public order: 'number' | 'name' = 'number';
+  public orderBy: 'number' | 'name' = 'number';
 
   getByPage(page: number, size: number = 40): Observable<Result[]> {
     if (page > 5) return of([]);
@@ -39,28 +39,11 @@ export class PokemonService {
       );
   }
 
-  orderBy(order: string) {
-    if ( order === 'name') {
-      this.pokemonList.sort( (a, b) => {
-        return a.name.localeCompare(b.name);
-      });
-    } else if (order === 'number') {
-      this.pokemonList.sort( (a, b) => {
-        const aId: string = a.url.substring(34, (a.url.length-1));
-        const bId: string = b.url.substring(34, (b.url.length-1));
-
-        return aId.localeCompare(bId, undefined, { numeric: true, sensitivity: 'base' });
-      });
-    }
-  }
-
   changeOrder() {
-    if (this.order === 'name') {
-      this.order = 'number';
+    if (this.orderBy === 'name') {
+      this.orderBy = 'number';
     } else {
-      this.order = 'name';
+      this.orderBy = 'name';
     }
-
-    this.orderBy(this.order);
   }
 }
