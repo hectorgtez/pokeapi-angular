@@ -1,9 +1,10 @@
 import { Component, ElementRef, OnInit, ViewChild, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { Result } from '../../interfaces/pokeapi.interface';
 import { Pokemon } from '../../interfaces/pokemon.interface';
+
 import { PokemonService } from '../../services/pokemon.service';
+
 import { PokemonCardComponent } from '../../components/pokemon-card/pokemon-card.component';
 import { PokemonSpriteComponent } from '../../components/pokemon-sprite/pokemon-sprite.component';
 import { PokemonInfoComponent } from '../../components/pokemon-info/pokemon-info.component';
@@ -21,9 +22,8 @@ import { PokemonInfoComponent } from '../../components/pokemon-info/pokemon-info
   styleUrl: './home.component.scss'
 })
 export class HomeComponent implements OnInit {
-  private _pokemonService = inject(PokemonService);
+  public pokemonService = inject(PokemonService);
 
-  public pokemonList: Result[] = [];
   public page: number = 1;
   public loading: boolean = false;
   public selectedPokemon?: Pokemon;
@@ -37,9 +37,11 @@ export class HomeComponent implements OnInit {
 
   loadList() {
     this.loading = true;
-    this._pokemonService.getByPage(this.page)
+    this.pokemonService.getByPage(this.page)
     .subscribe( (resp: any) => {
-      this.pokemonList = [...this.pokemonList, ...resp];
+      this.pokemonService.pokemonList =
+        [...this.pokemonService.pokemonList, ...resp];
+      this.pokemonService.orderBy(this.pokemonService.order);
       this.page++;
       this.loading = false;
     });
@@ -60,7 +62,7 @@ export class HomeComponent implements OnInit {
       return this.changeInfoStatus();
     }
 
-    this._pokemonService.getById(id)
+    this.pokemonService.getById(id)
       .subscribe( (resp: any) => {
         this.selectedPokemon = resp;
       });

@@ -4,7 +4,13 @@
     <h1>Pokédex</h1>
     <img src="./../assets/img/blue-pokeball.svg">
   </div>
-  <a href="">By number</a>
+  <a
+    href="#"
+    id="sortButton"
+    (click)="changeOrder()"
+  >
+    By {{ pokemonService.order }}
+  </a>
 </header>
 
 <router-outlet/>

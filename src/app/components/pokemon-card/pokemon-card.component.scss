@@ -1,3 +1,7 @@
+img {
+  max-height: 40px;
+}
+
 #container {
   align-items: center;
   display: flex;
@@ -55,6 +59,6 @@
   background-color: rgba(0, 0, 0, 0.125);
 }
 
-img {
-  max-height: 40px;
+#number {
+  width: 90px;
 }

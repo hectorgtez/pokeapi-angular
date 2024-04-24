@@ -3,7 +3,6 @@ import { CommonModule } from '@angular/common';
 
 import { Result } from '../../interfaces/pokeapi.interface';
 import { Pokemon } from '../../interfaces/pokemon.interface';
-import { PokemonService } from '../../services/pokemon.service';
 
 @Component({
   selector: 'app-pokemon-card',
@@ -17,8 +16,6 @@ export class PokemonCardComponent implements OnChanges {
   @Input() fullData?: Pokemon;
   @Input() selected: boolean = false;
   @Output() clicked = new EventEmitter<string>();
-
-  private _pokemonService = inject(PokemonService);
 
   public id: string = '0';
 
