@@ -11,16 +11,16 @@ import { environment } from '../../environments/environment.development';
 })
 export class PokemonService {
   private _http = inject(HttpClient);
-  private _apiUrl = environment.apiUrl;
+
+  private _apiUrl: string = environment.apiUrl;
+  private _totalPokemons: number = environment.totalPokemons;
 
   public pokemonList: Result[] = [];
+  public backupPokemonList: Result[] = [];
   public orderBy: 'number' | 'name' = 'number';
 
-  getByPage(page: number, size: number = 40): Observable<Result[]> {
-    if (page > 5) return of([]);
-
-    const offset = size * (page-1);
-    return this._http.get<Data>(`${ this._apiUrl }/pokemon?limit=${ size }&offset=${ offset }`)
+  getAllPokemons(): Observable<Result[]> {
+    return this._http.get<Data>(`${ this._apiUrl }/pokemon?offset=0&limit=${ this._totalPokemons }`)
       .pipe(
         map( resp => resp.results )
       );

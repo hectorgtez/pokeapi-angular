@@ -1,6 +1,6 @@
 app-pokemon-sprite {
   margin-left: 100px;
-  transition: 0.5s;
+  transition: 0.3s;
   transition-timing-function: ease-in-out;
   z-index: 2;
 
@@ -78,10 +78,11 @@ app-pokemon-info {
   }
 }
 
-#cardsContainer {
+.cardsContainer {
   display: flex;
   flex-direction: column;
   gap: 5px;
+  height: 100%;
   margin-right: 10px;
   max-height: 100%;
   overflow-x: hidden;

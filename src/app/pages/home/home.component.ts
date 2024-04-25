@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { Pokemon } from '../../interfaces/pokemon.interface';
 
 import { PokemonService } from '../../services/pokemon.service';
+import { SearchService } from '../../services/search.service';
 import { OrderByPipe } from '../../pipes/order-by.pipe';
 
 import { PokemonCardComponent } from '../../components/pokemon-card/pokemon-card.component';
@@ -25,8 +26,8 @@ import { PokemonInfoComponent } from '../../components/pokemon-info/pokemon-info
 })
 export class HomeComponent implements OnInit {
   public pokemonService = inject(PokemonService);
+  public searchService = inject(SearchService);
 
-  public page: number = 1;
   public loading: boolean = false;
   public selectedPokemon?: Pokemon;
   public info: boolean = false;
@@ -39,23 +40,13 @@ export class HomeComponent implements OnInit {
 
   loadList() {
     this.loading = true;
-    this.pokemonService.getByPage(this.page)
+    this.pokemonService.getAllPokemons()
     .subscribe( (resp: any) => {
       this.pokemonService.pokemonList =
         [...this.pokemonService.pokemonList, ...resp];
-      this.page++;
+      this.pokemonService.backupPokemonList = this.pokemonService.pokemonList;
       this.loading = false;
     });
-  }
-
-  onScroll(event: any) {
-    if (this.loading) return;
-
-    const nativeElement = this.cardsElement.nativeElement;
-    if (Math.round(nativeElement.clientHeight + nativeElement.scrollTop)
-        === event.srcElement.scrollHeight) {
-      this.loadList();
-    }
   }
 
   cardClicked(id: string) {

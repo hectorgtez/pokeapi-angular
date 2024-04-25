@@ -6,7 +6,7 @@ import { Result } from '../interfaces/pokeapi.interface';
   standalone: true
 })
 export class OrderByPipe implements PipeTransform {
-  transform(value: Result[], order: string) {
+  transform(value: Result[], order: string): Result[] {
     if ( order === 'name') {
       value.sort( (a, b) => {
         return a.name.localeCompare(b.name);

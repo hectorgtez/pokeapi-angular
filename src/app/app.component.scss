@@ -96,14 +96,21 @@ footer{
   &:hover {
     outline: 3px solid #4379cf;
   }
+
+  &:focus {
+    outline: 3px solid #4379cf;
+  }
 }
 
 #sortButton {
+  height: 45px;
+  line-height: 45px;
   text-align: center;
   transition: 0.05s ease-in-out;
+  vertical-align: middle;
   width: 130px;
 
   &:hover {
-    scale: 1.05;
+    scale: 1.02;
   }
 }

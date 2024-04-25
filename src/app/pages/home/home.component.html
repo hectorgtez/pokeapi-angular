@@ -5,14 +5,15 @@
     (clicked)="changeInfoStatus()"
     [ngClass]="{ opened: info }"
   />
+
   <app-pokemon-sprite
     [pokemon]="selectedPokemon"
     [ngClass]="{ opened: info }"
   />
+
   <div
-    id="cardsContainer"
+    class="cardsContainer"
     #cards
-    (scroll)="onScroll($event)"
   >
     <app-pokemon-card
       *ngFor="let pokemon of pokemonService.pokemonList | orderBy:pokemonService.orderBy"
@@ -20,6 +21,7 @@
       [selected]="pokemon.name === selectedPokemon?.name"
       (clicked)="cardClicked($event)"
     />
+
     <img
       *ngIf="loading"
       id="spinner"
