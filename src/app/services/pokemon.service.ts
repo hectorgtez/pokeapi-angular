@@ -45,6 +45,15 @@ export class PokemonService {
       );
   }
 
+  searchPokemon(term: string) {
+    if (!term) {
+      this.pokemons.set(this.pokemonsBackup());
+    } else {
+      this.pokemons.set(this.cPokemonsBackup()
+          .filter( pokemon => pokemon.name.includes(term.toLowerCase()) ));
+    }
+  }
+
   changeOrder() {
     if (this.orderBy() === 'name') {
       this.orderBy.set('number');

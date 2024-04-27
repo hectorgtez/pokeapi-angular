@@ -5,7 +5,6 @@ import { RouterOutlet } from '@angular/router';
 import { Result } from '../../interfaces/pokeapi.interface';
 
 import { PokemonService } from '../../services/pokemon.service';
-import { SearchService } from '../../services/search.service';
 import { OrderByPipe } from '../../pipes/order-by.pipe';
 
 import { PokemonCardComponent } from '../../components/pokemon-card/pokemon-card.component';
@@ -27,7 +26,6 @@ import { PokemonInfoComponent } from '../../components/pokemon-info/pokemon-info
   styleUrl: './home.component.scss'
 })
 export class HomeComponent {
-  private _searchService = inject(SearchService);
   public pokemonService = inject(PokemonService);
 
   public pokemonList: Result[] = [];
@@ -43,15 +41,7 @@ export class HomeComponent {
     if (this.debounceTimer) clearTimeout(this.debounceTimer);
 
     this.debounceTimer = setTimeout( () => {
-      if (!term) {
-        this.pokemonList = this.backupPokemonList;
-      } else {
-        this.pokemonList = this._searchService.searchPokemon(
-          [...this.backupPokemonList],
-          term,
-          'pokemon'
-        );
-      }
+      this.pokemonService.searchPokemon(term);
     }, 500);
   }
 }
