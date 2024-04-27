@@ -1,7 +1,8 @@
 import { Component, ElementRef, OnInit, ViewChild, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { RouterOutlet } from '@angular/router';
 
-import { Pokemon } from '../../interfaces/pokemon.interface';
+import { Result } from '../../interfaces/pokeapi.interface';
 
 import { PokemonService } from '../../services/pokemon.service';
 import { SearchService } from '../../services/search.service';
@@ -16,6 +17,7 @@ import { PokemonInfoComponent } from '../../components/pokemon-info/pokemon-info
   standalone: true,
   imports: [
     CommonModule,
+    RouterOutlet,
     PokemonCardComponent,
     PokemonSpriteComponent,
     PokemonInfoComponent,
@@ -24,45 +26,32 @@ import { PokemonInfoComponent } from '../../components/pokemon-info/pokemon-info
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss'
 })
-export class HomeComponent implements OnInit {
+export class HomeComponent {
+  private _searchService = inject(SearchService);
   public pokemonService = inject(PokemonService);
-  public searchService = inject(SearchService);
 
-  public loading: boolean = false;
-  public selectedPokemon?: Pokemon;
-  public info: boolean = false;
+  public pokemonList: Result[] = [];
+  public backupPokemonList: Result[] = [];
 
-  @ViewChild('cards') cardsElement!: ElementRef;
+  private debounceTimer?: NodeJS.Timeout;
 
-  ngOnInit(): void {
-    this.loadList();
+  changeOrder() {
+    this.pokemonService.changeOrder();
   }
 
-  loadList() {
-    this.loading = true;
-    this.pokemonService.getAllPokemons()
-    .subscribe( (resp: any) => {
-      this.pokemonService.pokemonList =
-        [...this.pokemonService.pokemonList, ...resp];
-      this.pokemonService.backupPokemonList = this.pokemonService.pokemonList;
-      this.loading = false;
-    });
-  }
+  search(term: string) {
+    if (this.debounceTimer) clearTimeout(this.debounceTimer);
 
-  cardClicked(id: string) {
-    if (this.selectedPokemon && id === this.selectedPokemon?.id.toString()) {
-      return this.changeInfoStatus();
-    }
-
-    this.pokemonService.getById(id)
-      .subscribe( (resp: any) => {
-        this.selectedPokemon = resp;
-      });
-  }
-
-  changeInfoStatus() {
-    if(this.selectedPokemon) {
-      this.info = !this.info;
-    }
+    this.debounceTimer = setTimeout( () => {
+      if (!term) {
+        this.pokemonList = this.backupPokemonList;
+      } else {
+        this.pokemonList = this._searchService.searchPokemon(
+          [...this.backupPokemonList],
+          term,
+          'pokemon'
+        );
+      }
+    }, 500);
   }
 }

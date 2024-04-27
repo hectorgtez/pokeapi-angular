@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable, inject } from '@angular/core';
-import { Observable, map, of } from 'rxjs';
+import { Injectable, computed, inject, signal } from '@angular/core';
+import { Observable, map } from 'rxjs';
 
 import { Data, Result } from '../interfaces/pokeapi.interface';
 import { Pokemon } from '../interfaces/pokemon.interface';
@@ -15,15 +15,21 @@ export class PokemonService {
   private _apiUrl: string = environment.apiUrl;
   private _totalPokemons: number = environment.totalPokemons;
 
-  public pokemonList: Result[] = [];
-  public backupPokemonList: Result[] = [];
-  public orderBy: 'number' | 'name' = 'number';
+  private pokemons = signal<Result[]>([]);
+  private pokemonsBackup = signal<Result[]>([]);
+  private orderBy = signal<'number' | 'name'>('number');
 
-  getAllPokemons(): Observable<Result[]> {
-    return this._http.get<Data>(`${ this._apiUrl }/pokemon?offset=0&limit=${ this._totalPokemons }`)
-      .pipe(
-        map( resp => resp.results )
-      );
+  public cPokemons = computed( () => this.pokemons() );
+  public cPokemonsBackup = computed( () => this.pokemonsBackup() );
+  public cOrderBy = computed( () => this.orderBy() );
+
+  getAllPokemons() {
+    this._http.get<Data>(`${ this._apiUrl }/pokemon?offset=0&limit=${ this._totalPokemons }`)
+      .pipe( map( resp => resp.results ) )
+      .subscribe( resp => {
+        this.pokemons.set(resp);
+        this.pokemonsBackup.set(resp);
+      });
   }
 
   getById(id: string): Observable<Pokemon> {
@@ -40,10 +46,10 @@ export class PokemonService {
   }
 
   changeOrder() {
-    if (this.orderBy === 'name') {
-      this.orderBy = 'number';
+    if (this.orderBy() === 'name') {
+      this.orderBy.set('number');
     } else {
-      this.orderBy = 'name';
+      this.orderBy.set('name');
     }
   }
 }

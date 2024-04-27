@@ -5,16 +5,14 @@ import { Result } from '../interfaces/pokeapi.interface';
   providedIn: 'root'
 })
 export class SearchService {
-  public searchResults: Result[] = [];
-
-  searchPokemon(array: any[], term: string, searchObject: string) {
-    if (!searchObject || !term) return;
-    this.searchResults = [];
+  searchPokemon(array: any[], term: string, searchObject: string): Result[] {
+    if (!searchObject || !term) return [];
 
     switch (searchObject) {
       case 'pokemon':
-        this.searchResults = array.filter( pokemon => pokemon.name.includes(term.toLowerCase()) );
-        break;
+        return array.filter( pokemon => pokemon.name.includes(term.toLowerCase()) );
+      default:
+        return [];
     }
   }
 }

@@ -35,9 +35,9 @@ export class PokemonInfoComponent {
   ngOnChanges(): void {
     if (this.pokemon)  {
       this._pokemonService.getDescription(this.pokemon?.id)
-      .subscribe( resp => {
-        this.description = resp;
-      });
+        .subscribe( resp => {
+          this.description = resp;
+        });
     }
   }
 }

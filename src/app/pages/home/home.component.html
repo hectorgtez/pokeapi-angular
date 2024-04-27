@@ -1,32 +1,41 @@
-<main id="container">
-  <app-pokemon-info
-    [pokemon]="selectedPokemon"
-    [opened]="info"
-    (clicked)="changeInfoStatus()"
-    [ngClass]="{ opened: info }"
-  />
-
-  <app-pokemon-sprite
-    [pokemon]="selectedPokemon"
-    [ngClass]="{ opened: info }"
-  />
-
-  <div
-    class="cardsContainer"
-    #cards
-  >
-    <app-pokemon-card
-      *ngFor="let pokemon of pokemonService.pokemonList | orderBy:pokemonService.orderBy"
-      [data]="pokemon"
-      [selected]="pokemon.name === selectedPokemon?.name"
-      (clicked)="cardClicked($event)"
-    />
-
-    <img
-      *ngIf="loading"
-      id="spinner"
-      src="./../../../assets/img/spinner.svg"
-      alt="Loading..."
-    >
+<header>
+  <div id="titleContainer">
+    <img src="./../assets/img/blue-pokeball.svg">
+    <h1>National Pokédex</h1>
+    <img src="./../assets/img/blue-pokeball.svg">
   </div>
-</main>
+
+  <input
+    id="searchBar"
+    type="text"
+    placeholder="Search..."
+    #txtSearch
+    (keyup)="search(txtSearch.value)"
+  />
+
+  <a
+    id="sortButton"
+    (click)="changeOrder()"
+  >
+    By {{ pokemonService.cOrderBy() | titlecase }}
+  </a>
+</header>
+
+<router-outlet/>
+
+<footer>
+  <p>
+    <kbd>X</kbd>
+    <a
+      href="https://www.linkedin.com/in/hectorgtez/"
+      target="_blank"
+    >
+      Perfil de LinkedIn
+    </a>
+  </p>
+
+  <p>
+    <kbd>A</kbd>
+    Elaborado por Héctor Gutiérrez
+  </p>
+</footer>
