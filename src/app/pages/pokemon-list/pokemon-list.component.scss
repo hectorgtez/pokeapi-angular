@@ -114,10 +114,14 @@ app-pokemon-info {
   margin-bottom: 10px;
   margin-left: 15px;
   padding: 0 15px;
-  transition: all 0.5s;
+  transition: 0.05s ease-in-out;
 
   &:focus {
     border: unset;
+  }
+
+  &:hover {
+    scale: 1.02;
   }
 }
 
