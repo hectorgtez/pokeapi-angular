@@ -1,3 +1,5 @@
+@use "./../../../assets/styles/var.scss";
+
 app-pokemon-sprite {
   margin-left: 100px;
   transition: 0.3s;
@@ -91,4 +93,38 @@ app-pokemon-info {
   max-height: 100%;
   overflow-x: hidden;
   overflow-y: scroll;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  height: calc(100vh - 130px);
+}
+
+.filter {
+  background-color: #4379cf;
+  border: unset;
+  border-radius: 50px;
+  box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.2);
+  -webkit-box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.2);
+  -moz-box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.2);
+  color: var.$white_text;
+  font-size: large;
+  height: 40px;
+  margin-bottom: 10px;
+  margin-left: 15px;
+  padding: 0 15px;
+  transition: all 0.5s;
+
+  &:focus {
+    border: unset;
+  }
+}
+
+.filters {
+  align-items: center;
+  display: flex;
+  height: 60px;
+  justify-content: end;
+  margin-right: 40px;
 }

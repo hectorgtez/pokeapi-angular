@@ -11,22 +11,58 @@
     [ngClass]="{ opened: info }"
   />
 
-  <div
-    class="cardsContainer"
-    #cards
-  >
-    <app-pokemon-card
-      *ngFor="let pokemon of pokemonService.cPokemons() | orderBy:pokemonService.cOrderBy()"
-      [data]="pokemon"
-      [selected]="pokemon.name === selectedPokemon?.name"
-      (clicked)="cardClicked($event)"
-    />
+  <div class="content">
+    <div class="filters">
+      <!-- Color filter -->
+      <select
+        name="colorFilter"
+        #colorFilter
+        class="filter"
+        (change)="onChangeFilter('color', colorFilter.value)"
+      >
+        <option value="">By Color</option>
+        <option
+          *ngFor="let color of pokemonService.cColors()"
+          [value]="color.name"
+        >
+          {{ color.name | titlecase }}
+        </option>
+      </select>
 
-    <img
-      *ngIf="loading"
-      id="spinner"
-      src="./../../../assets/img/spinner.svg"
-      alt="Loading..."
+      <!-- Egg group filter -->
+      <select
+        name="eggGroupFilter"
+        #eggGroupFilter
+        class="filter"
+        (change)="onChangeFilter('eggGroup', eggGroupFilter.value)"
+      >
+        <option value="">By Egg Group</option>
+        <option
+          *ngFor="let eggGroup of pokemonService.cEggGroups()"
+          [value]="eggGroup.name"
+        >
+          {{ eggGroup.name | titlecase }}
+        </option>
+      </select>
+    </div>
+
+    <div
+      class="cardsContainer"
+      #cards
     >
+      <app-pokemon-card
+        *ngFor="let pokemon of pokemonService.cPokemons() | orderBy:pokemonService.cOrderBy()"
+        [data]="pokemon"
+        [selected]="pokemon.name === selectedPokemon?.name"
+        (clicked)="cardClicked($event)"
+      />
+
+      <img
+        *ngIf="loading"
+        id="spinner"
+        src="./../../../assets/img/spinner.svg"
+        alt="Loading..."
+      >
+    </div>
   </div>
 </main>

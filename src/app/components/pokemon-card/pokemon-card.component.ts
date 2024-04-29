@@ -25,7 +25,15 @@ export class PokemonCardComponent implements OnChanges {
 
   extractInfo() {
     if (this.data && this.data.url !== '') {
-      this.id = this.data.url.substring(34, (this.data.url.length-1));
+      let beforeSlash: number = this.data.url.indexOf('/',
+        this.data.url.indexOf('/',
+          this.data.url.indexOf('/',
+            this.data.url.indexOf('/',
+              this.data.url.indexOf('/',
+                this.data.url.indexOf('/') + 1) + 1) + 1) + 1) + 1);
+      let afterSlash: number = this.data.url.indexOf('/', beforeSlash + 1);
+
+      this.id = this.data.url.substring(beforeSlash + 1, afterSlash);
       return;
     } else if (this.fullData) {
       const species = this.fullData.species;

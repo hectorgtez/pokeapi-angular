@@ -1,8 +1,7 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject } from '@angular/core';
+import { Component, ElementRef, ViewChild, inject } from '@angular/core';
 
 import { Pokemon } from '../../interfaces/pokemon.interface';
-import { Result } from '../../interfaces/pokeapi.interface';
 import { OrderByPipe } from '../../pipes/order-by.pipe';
 import { PokemonService } from '../../services/pokemon.service';
 
@@ -29,20 +28,14 @@ export class PokemonListComponent {
   public loading: boolean = false;
   public selectedPokemon?: Pokemon;
   public info: boolean = false;
-  public backupPokemonList: Result[] = [];
 
-  ngOnInit(): void {
-    this.loadList();
-  }
+  @ViewChild('colorFilter') colorFilter!: ElementRef;
+  @ViewChild('eggGroupFilter') eggGroupFilter!: ElementRef;
 
   changeInfoStatus() {
     if(this.selectedPokemon) {
       this.info = !this.info;
     }
-  }
-
-  loadList() {
-    this.pokemonService.getAllPokemons();
   }
 
   cardClicked(id: string) {
@@ -54,5 +47,24 @@ export class PokemonListComponent {
       .subscribe( (resp: any) => {
         this.selectedPokemon = resp;
       });
+  }
+
+  onChangeFilter(type: string, term: string) {
+    if (!type || !term) {
+      this.pokemonService.setFullPokemonList();
+    } else {
+
+      switch (type) {
+        case 'color':
+          this.pokemonService.getByColor(term);
+          this.eggGroupFilter.nativeElement.value = '';
+          break;
+        case 'eggGroup':
+          this.pokemonService.getByEggGroup(term);
+          this.colorFilter.nativeElement.value = '';
+          break;
+      }
+
+    }
   }
 }

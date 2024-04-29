@@ -15,15 +15,28 @@ export class PokemonService {
   private _apiUrl: string = environment.apiUrl;
   private _totalPokemons: number = environment.totalPokemons;
 
-  private pokemons = signal<Result[]>([]);
   private pokemonsBackup = signal<Result[]>([]);
+  private pokemons = signal<Result[]>([]);
   private orderBy = signal<'number' | 'name'>('number');
+  private colors = signal<Result[]>([]);
+  private eggGroups = signal<Result[]>([]);
 
-  public cPokemons = computed( () => this.pokemons() );
   public cPokemonsBackup = computed( () => this.pokemonsBackup() );
+  public cPokemons = computed( () => this.pokemons() );
   public cOrderBy = computed( () => this.orderBy() );
+  public cColors = computed( () => this.colors() );
+  public cEggGroups = computed( () => this.eggGroups() );
 
-  getAllPokemons() {
+  constructor() {
+    this.loadData();
+  }
+
+  loadData() {
+    this.getAllPokemons();
+    this.loadFilterOptions();
+  }
+
+  getAllPokemons(): void {
     this._http.get<Data>(`${ this._apiUrl }/pokemon?offset=0&limit=${ this._totalPokemons }`)
       .pipe( map( resp => resp.results ) )
       .subscribe( resp => {
@@ -36,7 +49,7 @@ export class PokemonService {
     return this._http.get<Pokemon>(`${ this._apiUrl }/pokemon/${ id }`);
   }
 
-  getDescription(id: number) {
+  getDescription(id: number): Observable<string> {
     return this._http.get(`${ this._apiUrl }/pokemon-species/${ id }`)
       .pipe(
         map( (resp: any) =>
@@ -45,7 +58,27 @@ export class PokemonService {
       );
   }
 
-  searchPokemon(term: string) {
+  getByColor(color: string): void {
+    if (!color) {
+      this.setFullPokemonList();
+    } else {
+      this._http.get(`${ this._apiUrl }/pokemon-color/${ color }`)
+          .pipe( map( (resp: any) => resp.pokemon_species ) )
+          .subscribe( resp => this.pokemons.set(resp) );
+    }
+  }
+
+  getByEggGroup(eggGroup: string): void {
+    if (!eggGroup) {
+      this.setFullPokemonList();
+    } else {
+      this._http.get(`${ this._apiUrl }/egg-group/${ eggGroup }`)
+          .pipe( map( (resp: any) => resp.pokemon_species ) )
+          .subscribe( resp => this.pokemons.set(resp) );
+    }
+  }
+
+  searchPokemon(term: string): void {
     if (!term) {
       this.pokemons.set(this.pokemonsBackup());
     } else {
@@ -54,11 +87,29 @@ export class PokemonService {
     }
   }
 
-  changeOrder() {
+  setFullPokemonList() {
+    this.pokemons.set(this.cPokemonsBackup());
+  }
+
+  changeOrder(): void {
     if (this.orderBy() === 'name') {
       this.orderBy.set('number');
     } else {
       this.orderBy.set('name');
     }
+  }
+
+  loadFilterOptions() {
+    this._http.get<Result[]>(`${ this._apiUrl }/pokemon-color`)
+        .pipe( map((resp: any) => resp.results) )
+        .subscribe( resp => {
+          this.colors.set(resp);
+        });
+
+    this._http.get<Result[]>(`${ this._apiUrl }/egg-group`)
+        .pipe( map((resp: any) => resp.results) )
+        .subscribe( resp => {
+          this.eggGroups.set(resp);
+        });
   }
 }
