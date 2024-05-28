@@ -49,6 +49,7 @@
     <div
       class="cardsContainer"
       #cards
+      (scroll)="onScroll($event)"
     >
       <app-pokemon-card
         *ngFor="let pokemon of pokemonService.cPokemons() | orderBy:pokemonService.cOrderBy()"

@@ -2,9 +2,9 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable, computed, inject, signal } from '@angular/core';
 import { Observable, map } from 'rxjs';
 
+import { environment } from '../../environments/environment.development';
 import { Data, Result } from '../interfaces/pokeapi.interface';
 import { Pokemon } from '../interfaces/pokemon.interface';
-import { environment } from '../../environments/environment.development';
 
 @Injectable({
   providedIn: 'root'
@@ -15,23 +15,34 @@ export class PokemonService {
   private _apiUrl: string = environment.apiUrl;
   private _totalPokemons: number = environment.totalPokemons;
 
-  private pokemonsBackup = signal<Result[]>([]);
+  // Signals
+  private pokemonFullList = signal<Result[]>([]);
+  private pokemonsTemp = signal<Result[]>([]);
   private pokemons = signal<Result[]>([]);
-  private orderBy = signal<'number' | 'name'>('number');
   private colors = signal<Result[]>([]);
   private eggGroups = signal<Result[]>([]);
+  private orderBy = signal<'number' | 'name'>('number');
+  private page = signal<number>(1);
+  private filtered = signal<boolean>(false);
+  private loading = signal<boolean>(false);
 
-  public cPokemonsBackup = computed( () => this.pokemonsBackup() );
+  // Computed
+  public cPokemonFullList = computed( () => this.pokemonFullList() );
+  public cPokemonTemp = computed( () => this.pokemonsTemp() );
   public cPokemons = computed( () => this.pokemons() );
-  public cOrderBy = computed( () => this.orderBy() );
   public cColors = computed( () => this.colors() );
   public cEggGroups = computed( () => this.eggGroups() );
+  public cOrderBy = computed( () => this.orderBy() );
+  public cPage = computed( () => this.page() );
+  public cFiltered = computed( () => this.filtered() );
+  public cLoading = computed( () => this.loading() );
 
   constructor() {
     this.loadData();
   }
 
   loadData() {
+    this.getByPage()
     this.getAllPokemons();
     this.loadFilterOptions();
   }
@@ -40,13 +51,25 @@ export class PokemonService {
     this._http.get<Data>(`${ this._apiUrl }/pokemon?offset=0&limit=${ this._totalPokemons }`)
       .pipe( map( resp => resp.results ) )
       .subscribe( resp => {
-        this.pokemons.set(resp);
-        this.pokemonsBackup.set(resp);
+        this.pokemonFullList.set(resp);
       });
   }
 
   getById(id: string): Observable<Pokemon> {
     return this._http.get<Pokemon>(`${ this._apiUrl }/pokemon/${ id }`);
+  }
+
+  getByPage(size: number = 40) {
+    if(this.cPage() > 5 || this.cFiltered()) return;
+
+    const offset = size * (this.cPage() - 1);
+    this._http.get<Data>(`${ this._apiUrl }/pokemon?offset=${ offset }&limit=${ size }`)
+      .pipe( map( resp => resp.results ) )
+      .subscribe( resp => {
+        this.pokemons.set([...this.cPokemons(), ...resp]);
+        this.page.set(this.cPage() + 1);
+        this.loading.set(false);
+      });
   }
 
   getDescription(id: number): Observable<string> {
@@ -60,43 +83,50 @@ export class PokemonService {
 
   getByColor(color: string): void {
     if (!color) {
-      this.setFullPokemonList();
+      this.restartList(true);
     } else {
       this._http.get(`${ this._apiUrl }/pokemon-color/${ color }`)
           .pipe( map( (resp: any) => resp.pokemon_species ) )
-          .subscribe( resp => this.pokemons.set(resp) );
+          .subscribe( resp => {
+            this.pokemons.set(resp);
+            this.filtered.set(true);
+          });
     }
   }
 
   getByEggGroup(eggGroup: string): void {
     if (!eggGroup) {
-      this.setFullPokemonList();
+      this.restartList(true);
     } else {
       this._http.get(`${ this._apiUrl }/egg-group/${ eggGroup }`)
           .pipe( map( (resp: any) => resp.pokemon_species ) )
-          .subscribe( resp => this.pokemons.set(resp) );
+          .subscribe( resp => {
+            this.pokemons.set(resp);
+            this.filtered.set(true);
+          });
     }
   }
 
   searchPokemon(term: string): void {
     if (!term) {
-      this.pokemons.set(this.pokemonsBackup());
+      this.restartList();
     } else {
-      this.pokemons.set(this.cPokemonsBackup()
+      this.pokemons.set(this.cPokemonFullList()
           .filter( pokemon => pokemon.name.includes(term.toLowerCase()) ));
+      this.filtered.set(true);
     }
   }
 
-  setFullPokemonList() {
-    this.pokemons.set(this.cPokemonsBackup());
-  }
-
-  changeOrder(): void {
+  toggleOrder(): void {
     if (this.orderBy() === 'name') {
       this.orderBy.set('number');
     } else {
       this.orderBy.set('name');
     }
+  }
+
+  setLoading(value: boolean): void {
+    this.loading.set(value);
   }
 
   loadFilterOptions() {
@@ -111,5 +141,14 @@ export class PokemonService {
         .subscribe( resp => {
           this.eggGroups.set(resp);
         });
+  }
+
+  restartList(byFilter: boolean = false) {
+    this.pokemons.set([]);
+    this.filtered.set(false);
+    this.page.set(1);
+    if (!this.cLoading()) {
+      this.getByPage();
+    }
   }
 }

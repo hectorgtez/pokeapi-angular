@@ -1,6 +1,5 @@
 export const environment = {
   production: false,
   apiUrl: 'https://pokeapi.co/api/v2',
-  // totalPokemons: 1025,
-  totalPokemons: 40,
+  totalPokemons: 1025,
 };

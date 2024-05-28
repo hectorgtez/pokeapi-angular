@@ -2,8 +2,6 @@ import { Component, ElementRef, OnInit, ViewChild, inject } from '@angular/core'
 import { CommonModule } from '@angular/common';
 import { RouterOutlet } from '@angular/router';
 
-import { Result } from '../../interfaces/pokeapi.interface';
-
 import { PokemonService } from '../../services/pokemon.service';
 import { OrderByPipe } from '../../pipes/order-by.pipe';
 
@@ -26,15 +24,11 @@ import { PokemonInfoComponent } from '../../components/pokemon-info/pokemon-info
   styleUrl: './home.component.scss'
 })
 export class HomeComponent {
+  private debounceTimer?: NodeJS.Timeout;
   public pokemonService = inject(PokemonService);
 
-  public pokemonList: Result[] = [];
-  public backupPokemonList: Result[] = [];
-
-  private debounceTimer?: NodeJS.Timeout;
-
   changeOrder() {
-    this.pokemonService.changeOrder();
+    this.pokemonService.toggleOrder();
   }
 
   search(term: string) {

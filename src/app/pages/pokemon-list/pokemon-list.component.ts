@@ -23,14 +23,20 @@ import { PokemonSpriteComponent } from '../../components/pokemon-sprite/pokemon-
   styleUrl: './pokemon-list.component.scss'
 })
 export class PokemonListComponent {
+  @ViewChild('cards') cardsElement!: ElementRef;
+  @ViewChild('colorFilter') colorFilter!: ElementRef;
+  @ViewChild('eggGroupFilter') eggGroupFilter!: ElementRef;
+
   public pokemonService = inject(PokemonService);
 
   public loading: boolean = false;
   public selectedPokemon?: Pokemon;
   public info: boolean = false;
 
-  @ViewChild('colorFilter') colorFilter!: ElementRef;
-  @ViewChild('eggGroupFilter') eggGroupFilter!: ElementRef;
+  loadList() {
+    this.pokemonService.setLoading(true);
+    this.pokemonService.getByPage();
+  }
 
   changeInfoStatus() {
     if(this.selectedPokemon) {
@@ -51,7 +57,7 @@ export class PokemonListComponent {
 
   onChangeFilter(type: string, term: string) {
     if (!type || !term) {
-      this.pokemonService.setFullPokemonList();
+      this.pokemonService.restartList(true);
     } else {
 
       switch (type) {
@@ -64,7 +70,17 @@ export class PokemonListComponent {
           this.colorFilter.nativeElement.value = '';
           break;
       }
+    }
+  }
 
+  onScroll(event: any) {
+    if (this.loading) return;
+
+    const cardsHeight = this.cardsElement.nativeElement.clientHeight;
+    const scrolled = this.cardsElement.nativeElement.scrollTop;
+
+    if (Math.round(cardsHeight + scrolled) === event.srcElement.scrollHeight) {
+      this.loadList();
     }
   }
 }
