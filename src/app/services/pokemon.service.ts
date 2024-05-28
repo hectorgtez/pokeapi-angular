@@ -17,7 +17,6 @@ export class PokemonService {
 
   // Signals
   private pokemonFullList = signal<Result[]>([]);
-  private pokemonsTemp = signal<Result[]>([]);
   private pokemons = signal<Result[]>([]);
   private colors = signal<Result[]>([]);
   private eggGroups = signal<Result[]>([]);
@@ -28,7 +27,6 @@ export class PokemonService {
 
   // Computed
   public cPokemonFullList = computed( () => this.pokemonFullList() );
-  public cPokemonTemp = computed( () => this.pokemonsTemp() );
   public cPokemons = computed( () => this.pokemons() );
   public cColors = computed( () => this.colors() );
   public cEggGroups = computed( () => this.eggGroups() );
@@ -60,7 +58,10 @@ export class PokemonService {
   }
 
   getByPage(size: number = 40) {
-    if(this.cPage() > 5 || this.cFiltered()) return;
+    if(this.cPage() > 5 || this.cFiltered()) {
+      this.loading.set(false);
+      return;
+    }
 
     const offset = size * (this.cPage() - 1);
     this._http.get<Data>(`${ this._apiUrl }/pokemon?offset=${ offset }&limit=${ size }`)
@@ -83,7 +84,7 @@ export class PokemonService {
 
   getByColor(color: string): void {
     if (!color) {
-      this.restartList(true);
+      this.restartList();
     } else {
       this._http.get(`${ this._apiUrl }/pokemon-color/${ color }`)
           .pipe( map( (resp: any) => resp.pokemon_species ) )
@@ -96,7 +97,7 @@ export class PokemonService {
 
   getByEggGroup(eggGroup: string): void {
     if (!eggGroup) {
-      this.restartList(true);
+      this.restartList();
     } else {
       this._http.get(`${ this._apiUrl }/egg-group/${ eggGroup }`)
           .pipe( map( (resp: any) => resp.pokemon_species ) )
@@ -143,12 +144,15 @@ export class PokemonService {
         });
   }
 
-  restartList(byFilter: boolean = false) {
+  restartList() {
     this.pokemons.set([]);
     this.filtered.set(false);
     this.page.set(1);
+
     if (!this.cLoading()) {
-      this.getByPage();
+      setTimeout(() => {
+        this.getByPage();
+      }, 3);
     }
   }
 }

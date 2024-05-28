@@ -29,14 +29,8 @@ export class PokemonListComponent {
 
   public pokemonService = inject(PokemonService);
 
-  public loading: boolean = false;
   public selectedPokemon?: Pokemon;
   public info: boolean = false;
-
-  loadList() {
-    this.pokemonService.setLoading(true);
-    this.pokemonService.getByPage();
-  }
 
   changeInfoStatus() {
     if(this.selectedPokemon) {
@@ -57,7 +51,7 @@ export class PokemonListComponent {
 
   onChangeFilter(type: string, term: string) {
     if (!type || !term) {
-      this.pokemonService.restartList(true);
+      this.pokemonService.restartList();
     } else {
 
       switch (type) {
@@ -74,13 +68,14 @@ export class PokemonListComponent {
   }
 
   onScroll(event: any) {
-    if (this.loading) return;
+    if (this.pokemonService.cLoading()) return;
 
     const cardsHeight = this.cardsElement.nativeElement.clientHeight;
     const scrolled = this.cardsElement.nativeElement.scrollTop;
 
     if (Math.round(cardsHeight + scrolled) === event.srcElement.scrollHeight) {
-      this.loadList();
+      this.pokemonService.setLoading(true);
+      this.pokemonService.getByPage();
     }
   }
 }

@@ -59,7 +59,7 @@
       />
 
       <img
-        *ngIf="loading"
+        *ngIf="pokemonService.cLoading()"
         id="spinner"
         src="./../../../assets/img/spinner.svg"
         alt="Loading..."
